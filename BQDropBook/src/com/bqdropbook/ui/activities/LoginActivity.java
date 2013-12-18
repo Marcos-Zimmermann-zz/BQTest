@@ -1,15 +1,17 @@
-package com.example.bqdropbook;
+package com.bqdropbook.ui.activities;
+
+import com.bqdropbook.R;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
-public class MainActivity extends Activity {
+public class LoginActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.login);
 	}
 
 	@Override
