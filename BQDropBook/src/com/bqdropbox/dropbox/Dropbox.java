@@ -7,8 +7,8 @@ import com.dropbox.client2.session.Session.AccessType;
 
 public class Dropbox {
 	
-	final static private String APP_KEY = "o7s0zr9scqz8k9p";
-	final static private String APP_SECRET = "0fjx78v2hbrbh6n";
+	final static private String APP_KEY = "bx7bulmkfytdumf";
+	final static private String APP_SECRET = "isvq7nesyfkbyq3";
 	final static private AccessType ACCESS_TYPE = AccessType.DROPBOX;
 	
 	private DropboxAPI<AndroidAuthSession> mDBApi;

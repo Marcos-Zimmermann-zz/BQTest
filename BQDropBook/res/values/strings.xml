@@ -5,6 +5,6 @@
     <string name="action_settings">Settings</string>
 	<string name="username_hint">User name</string>
     <string name="password_hint">Password</string>
-    <string name="login_button">Log in</string>
+    <string name="login_button">Log into Dropbox</string>
     <string name="register_button">Sign up</string>
 </resources>
