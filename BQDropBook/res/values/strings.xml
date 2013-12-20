@@ -7,4 +7,11 @@
     <string name="password_hint">Password</string>
     <string name="login_button">Log into Dropbox</string>
     <string name="register_button">Sign up</string>
+    
+    <string-array name="library_spinner">
+        <item>Default</item>
+        <item>Sort alphabetically</item>
+        <item>Sort by date of creation</item>
+    </string-array>
+    
 </resources>

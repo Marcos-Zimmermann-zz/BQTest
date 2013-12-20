@@ -48,7 +48,7 @@ public class LoginActivity extends Activity {
 	    }
 	}
 	
-	/*
+	
 	public void onClick(View v) {
 		final int id = v.getId();
 		if(R.id.button1 == id) {
@@ -57,5 +57,5 @@ public class LoginActivity extends Activity {
 			mDBApi.getSession().startAuthentication(LoginActivity.this);
 		}
 	}
-	*/
+	
 }
