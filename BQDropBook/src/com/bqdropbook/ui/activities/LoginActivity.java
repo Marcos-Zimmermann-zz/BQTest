@@ -22,7 +22,11 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		bqdropbook = ((BQDropbook)getApplicationContext());
 		setContentView(R.layout.login_layout);
-		mDBApi = null;
+
+		//Dropbox connection
+		mDBApi = new Dropbox().getMDBApi();
+		logged = true;
+		mDBApi.getSession().startAuthentication(LoginActivity.this);
 	}
 	
 	@Override
@@ -44,6 +48,7 @@ public class LoginActivity extends Activity {
 	    }
 	}
 	
+	/*
 	public void onClick(View v) {
 		final int id = v.getId();
 		if(R.id.button1 == id) {
@@ -52,4 +57,5 @@ public class LoginActivity extends Activity {
 			mDBApi.getSession().startAuthentication(LoginActivity.this);
 		}
 	}
+	*/
 }

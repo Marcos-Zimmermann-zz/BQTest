@@ -11,19 +11,18 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class GetFilesTask extends AsyncTask<DropboxAPI<AndroidAuthSession>, Integer, List<Entry>>{
-
+	
 	@Override
 	protected List<Entry> doInBackground(DropboxAPI<AndroidAuthSession>... mDBApi) {
 		
 		List<Entry> CFolder = null;
 		
 		try {
-			Entry contact = mDBApi[0].metadata("/", 0, null, true, null);
+			Entry contact = mDBApi[0].metadata("", 0, null, true, null);
 		    CFolder = contact.contents;
 		    for (Entry entry : CFolder) {
 		    Log.i("DbExampleLog", "Filename: " + entry.fileName());}
 		} catch (DropboxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
