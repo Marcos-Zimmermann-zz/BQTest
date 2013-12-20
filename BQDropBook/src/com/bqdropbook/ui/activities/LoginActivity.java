@@ -1,9 +1,9 @@
 package com.bqdropbook.ui.activities;
 
+import com.bqdropbook.BQDropbook;
 import com.bqdropbox.dropbox.Dropbox;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
-import com.dropbox.client2.session.AccessTokenPair;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -15,11 +15,12 @@ public class LoginActivity extends Activity {
 	
 	private DropboxAPI<AndroidAuthSession> mDBApi;
 	private boolean logged = false;
-	public final static String TOKEN = "com.bqdropbook.ui.activities.TOKEN";
+	private BQDropbook bqdropbook;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		bqdropbook = ((BQDropbook)getApplicationContext());
 		setContentView(R.layout.login_layout);
 		mDBApi = null;
 	}
@@ -33,11 +34,8 @@ public class LoginActivity extends Activity {
 	            // Required to complete auth, sets the access token on the session
 	            mDBApi.getSession().finishAuthentication();
 
-	            AccessTokenPair token = mDBApi.getSession().getAccessTokenPair();
 	            Intent intent = new Intent(getApplicationContext(), LibraryActivity.class);
-	            //intent.setClassName("com.bqdropbook.ui.activities", "com.bqdropbook.ui.activities.LibraryActivity.class");
-	            
-	            intent.putExtra(TOKEN,token);	            
+	            bqdropbook.setSession(mDBApi);
 	            startActivity(intent);
 	        } catch (IllegalStateException e) {
 	        	logged = false;
