@@ -1,7 +1,5 @@
 package com.bqdropbook.ui.adapter;
 
-import java.text.DecimalFormat;
-
 import com.bqdropbook.data.Book;
 import com.bqdropbook.ui.activities.R;
 
@@ -11,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class BookAdapter extends ArrayAdapter<Book> {
@@ -47,11 +44,9 @@ public class BookAdapter extends ArrayAdapter<Book> {
             
             //ImageView imageView = (ImageView) row.findViewById(R.id.icon);
             TextView textView = (TextView) row.findViewById(R.id.name);
-            
+                        
             textView.setText(books[position].getName());
         }
-
-        Book book = books[position];
 
         return row;
 

@@ -8,7 +8,6 @@ import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class SearchFilesTask extends AsyncTask<DropboxAPI<AndroidAuthSession>, Void, List<Entry>>{
 	

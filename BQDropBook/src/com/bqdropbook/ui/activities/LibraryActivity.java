@@ -1,10 +1,14 @@
 package com.bqdropbook.ui.activities;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.bqdropbook.BQDropbook;
 import com.bqdropbook.async.SearchFilesTask;
+import com.bqdropbook.comparator.BookModificationDateComparator;
+import com.bqdropbook.comparator.BookNameComparator;
 import com.bqdropbook.data.Book;
 import com.bqdropbook.ui.adapter.BookAdapter;
 import com.dropbox.client2.DropboxAPI;
@@ -14,17 +18,12 @@ import com.dropbox.client2.android.AndroidAuthSession;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
-import android.app.Fragment;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class LibraryActivity extends ListActivity {
@@ -53,6 +52,11 @@ public class LibraryActivity extends ListActivity {
 	        dropdownValues);
 
 	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    
+	    BQDropbook bqdropbook = ((BQDropbook)getApplicationContext());
+		mDBApi = bqdropbook.getSession();
+		final Book[] books = getBooks();
+	    
 	    actionBar.setListNavigationCallbacks(adapter, new OnNavigationListener() {
 	
 			@Override
@@ -61,12 +65,15 @@ public class LibraryActivity extends ListActivity {
 				switch (itemPosition) {
 				case 0:
 					Toast.makeText(getApplicationContext(), "Unsorted items", Toast.LENGTH_LONG).show();
+					DisplayBooks(books);
 					break;
 				case 1:
 					Toast.makeText(getApplicationContext(), "Sorting alphabetically", Toast.LENGTH_LONG).show();
+					DisplayBooks(sortAlphabetically(books));
 					break;
 				case 2:
 					Toast.makeText(getApplicationContext(), "Sorting by date of creation", Toast.LENGTH_LONG).show();
+					DisplayBooks(sortByModificationDate(books));
 					break;
 				default:
 				 break;
@@ -75,11 +82,6 @@ public class LibraryActivity extends ListActivity {
 		 return true;
 		 }
 		 });
-		
-	    BQDropbook bqdropbook = ((BQDropbook)getApplicationContext());
-		mDBApi = bqdropbook.getSession();
-	    
-		Book[] books = getBooks();
 
 		DisplayBooks(books);
 		
@@ -105,7 +107,7 @@ public class LibraryActivity extends ListActivity {
 			
 			for(int i = 0; i < books.length; i++){
 				entry = BFolder.get(i);
-				books[i] = new Book(entry.fileName());
+				books[i] = new Book(entry.fileName(), entry.modified);
 			}
 			
 		} catch (InterruptedException e) {
@@ -121,5 +123,33 @@ public class LibraryActivity extends ListActivity {
 		
 		BookAdapter bookadapter = new BookAdapter(this, books);
 		setListAdapter(bookadapter);
+	}
+	
+	private Book[] sortAlphabetically(Book[] books){
+		
+		ArrayList<Book> unsortedBooks = new ArrayList<Book>();
+		
+		for(int i = 0; i < books.length; i++){
+			unsortedBooks.add(books[i]);
+		}
+		
+		BookNameComparator comparator = new BookNameComparator();
+		Collections.sort(unsortedBooks, comparator);
+		
+		return unsortedBooks.toArray(new Book[books.length]);
+	}
+	
+	private Book[] sortByModificationDate(Book[] books){
+		
+		ArrayList<Book> unsortedBooks = new ArrayList<Book>();
+		
+		for(int i = 0; i < books.length; i++){
+			unsortedBooks.add(books[i]);
+		}
+		
+		BookModificationDateComparator comparator = new BookModificationDateComparator();
+		Collections.sort(unsortedBooks, comparator);
+		
+		return unsortedBooks.toArray(new Book[books.length]);
 	}
 }
