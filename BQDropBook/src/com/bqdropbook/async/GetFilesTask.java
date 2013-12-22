@@ -1,43 +1,39 @@
 package com.bqdropbook.async;
 
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import com.dropbox.client2.DropboxAPI;
-import com.dropbox.client2.DropboxAPI.Entry;
+import com.dropbox.client2.DropboxAPI.DropboxFileInfo;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class GetFilesTask extends AsyncTask<DropboxAPI<AndroidAuthSession>, Integer, List<Entry>>{
-	
+public class GetFilesTask extends AsyncTask<DropboxAPI<AndroidAuthSession>, Void, File>{
+
 	@Override
-	protected List<Entry> doInBackground(DropboxAPI<AndroidAuthSession>... mDBApi) {
+	protected File doInBackground(DropboxAPI<AndroidAuthSession>... mDBApi) {
+
+		DropboxFileInfo info = null;
 		
-		List<Entry> CFolder = null;
-		
+		File file = new File("/a.epub");
+		FileOutputStream outputStream;
 		try {
-			Entry contact = mDBApi[0].metadata("", 0, null, true, null);
-		    CFolder = contact.contents;
-		    for (Entry entry : CFolder) {
-		    Log.i("DbExampleLog", "Filename: " + entry.fileName());}
+			outputStream = new FileOutputStream(file);
+			info = mDBApi[0].getFile("/a.epub", null, outputStream, null);
+			Log.i("DbExampleLog", "The file's rev is: " + info.getMetadata().rev);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (DropboxException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return CFolder;
+		return file;
 	}
 	
-	/*
-	@Override
-    protected void onProgressUpdate(Integer... progress) {
-        setProgressPercent(progress[0]);
-    }
-
-	@Override
-    protected void onPostExecute(Long result) {
-        showDialog("Downloaded " + result + " bytes");
-    }
-	*/
 }

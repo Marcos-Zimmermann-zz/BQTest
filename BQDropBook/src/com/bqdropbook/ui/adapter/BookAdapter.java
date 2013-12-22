@@ -26,7 +26,6 @@ public class BookAdapter extends ArrayAdapter<Book> {
     public BookAdapter(final Context context, final Book[] books) {
 
         super(context, R.layout.library_row_layout, books);
-
         this.context = context;
         this.books = books;
 
@@ -43,13 +42,15 @@ public class BookAdapter extends ArrayAdapter<Book> {
             row = inflater.inflate(R.layout.library_row_layout, parent, false);
             
             //ImageView imageView = (ImageView) row.findViewById(R.id.icon);
-            TextView textView = (TextView) row.findViewById(R.id.name);
+            TextView nameView = (TextView) row.findViewById(R.id.name);
+            TextView dateView = (TextView) row.findViewById(R.id.date);
                         
-            textView.setText(books[position].getName());
+            nameView.setText(books[position].getName());
+            dateView.setText(books[position].getModificationDate());
         }
 
         return row;
 
     }
- 
+    
 }

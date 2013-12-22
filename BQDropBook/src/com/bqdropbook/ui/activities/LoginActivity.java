@@ -38,6 +38,7 @@ public class LoginActivity extends Activity {
 	            // Required to complete auth, sets the access token on the session
 	            mDBApi.getSession().finishAuthentication();
 
+	            //Go to the Library Activity and save the session into the app
 	            Intent intent = new Intent(getApplicationContext(), LibraryActivity.class);
 	            bqdropbook.setSession(mDBApi);
 	            startActivity(intent);
